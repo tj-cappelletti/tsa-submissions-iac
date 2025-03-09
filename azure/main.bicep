@@ -48,12 +48,10 @@ module managedCluster 'br/public:avm/res/container-service/managed-cluster:0.8.3
         vmSize: 'Standard_D4ads_v5'
       }
     ]
-    aadProfile: {
-      aadProfileEnableAzureRBAC: true
-      aadProfileManaged: true
-    }
+    disableLocalAccounts: false
     managedIdentities: {
       systemAssigned: true
     }
+    publicNetworkAccess: 'Enabled'
   }
 }
