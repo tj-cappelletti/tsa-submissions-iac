@@ -49,9 +49,15 @@ module managedCluster 'br/public:avm/res/container-service/managed-cluster:0.8.3
       }
     ]
     disableLocalAccounts: false
+    enableStorageProfileBlobCSIDriver: true
+    enableStorageProfileFileCSIDriver: true
+    enableStorageProfileDiskCSIDriver: true
+    enableStorageProfileSnapshotController: true
+    ingressApplicationGatewayEnabled: true
     managedIdentities: {
       systemAssigned: true
     }
     publicNetworkAccess: 'Enabled'
+    webApplicationRoutingEnabled: true
   }
 }
