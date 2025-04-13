@@ -1,0 +1,95 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: coding-api-service
+  namespace: coding
+  labels:
+    app: coding
+    tier: api
+spec:
+  type: ClusterIP
+  ports:
+  - port: 80
+    name: http
+  - port: 443
+    name: https
+  selector:
+    app: coding
+    tier: api
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: coding-api
+  namespace: coding
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: coding
+      tier: api
+  template:
+    metadata:
+      labels:
+        app: coding
+        tier: api
+    spec:
+      containers:
+      - name: coding-api
+        image: ghcr.io/tj-cappelletti/tsa/submissions/coding/webapi:0
+        env:
+        - name: ConnectionStrings__MongoDb
+          valueFrom:
+            secretKeyRef:
+              name: coding-secrets
+              key: mongoDb.connectionString
+        - name: SubmissionsDatabase__DatabaseName
+          valueFrom:
+            configMapKeyRef:
+              name: coding-configmap
+              key: submissions.database.name
+        resources:
+          limits:
+            memory: "500Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 80
+          name: api-http-svc
+        - containerPort: 443
+          name: api-https-svc
+        # livenessProbe:
+        #   httpGet:
+        #     path: /api/status
+        #     port: api-http-svc
+        # readinessProbe:
+        #   httpGet:
+        #     path: /api/status
+        #     port: api-http-svc
+        #   initialDelaySeconds: 5
+        #   timeoutSeconds: 15
+---
+kind: Ingress
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: coding-api
+  namespace: coding
+  labels:
+    app: coding
+    tier: api
+spec:
+  ingressClassName: webapprouting.kubernetes.azure.com
+  tls:
+    - hosts:
+        - api.tsa.webstorm.cloud
+      secretName: authentik-cert-secret
+  rules:
+    - host: api.tsa.webstorm.cloud
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: coding-api-server
+                port:
+                  number: 80
