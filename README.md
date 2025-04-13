@@ -1,4 +1,5 @@
-# TSA Shared Services
+# TSA Submissions IaC
+This repository contains the necessary infrastructure as code (IaC), Kubernetes deployments, and scripts to setup the servers to be used by the TSA Submissions applications.
 
 ## Deployment
 ```powershell
