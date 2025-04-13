@@ -47,6 +47,3 @@ configs:
       username: "$GH_USERNAME"
       password: "$GH_TOKEN"
 EOF
-
-echo "Restarting K3s service..."
-systemctl restart k3s
