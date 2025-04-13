@@ -5,8 +5,8 @@ metadata:
   labels:
     app: coding
 data:
-  submissions.database.host: coding-mongodb-service
-  submissions.database.loginDatabase: admin
-  submissions.database.name: submissions
-  submissions.database.port: '27017'
-  submissions.database.username: root
+  database.submissions.host: coding-mongodb-service
+  database.submissions.loginDatabase: admin
+  database.submissions.name: submissions
+  database.submissions.port: '27017'
+  database.submissions.username: root
