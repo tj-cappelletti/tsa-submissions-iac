@@ -6,7 +6,7 @@ if [ -z "$1" ] || [ -z "$2" ] || [ -z "$3" ] || [ -z "$4" ]; then
   exit 1
 fi
 
-K3S_URL=$1
+K3S_PRIMARY=$1
 K3S_TOKEN=$2
 GH_USERNAME=$3
 GH_TOKEN=$4
@@ -19,7 +19,7 @@ echo "Installing necessary packages..."
 apt install qemu-guest-agent -y
 
 echo "Installing K3s on secondary node..."
-curl -sfL https://get.k3s.io | K3S_URL=$K3S_URL K3S_TOKEN=$K3S_TOKEN sh -
+curl -sfL https://get.k3s.io | K3S_URL=https://$K3S_PRIMARY:6443 K3S_TOKEN=$K3S_TOKEN sh -
 
 echo "Creating kubeconfig directory..."
 mkdir -p $HOME/.kube
