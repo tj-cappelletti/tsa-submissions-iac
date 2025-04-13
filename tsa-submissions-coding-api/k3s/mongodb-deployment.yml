@@ -36,12 +36,12 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   name: coding-configmap
-                  key: submissions.database.username
+                  key: database.submissions.username
             - name: MONGO_INITDB_ROOT_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: coding-secret
-                  key: password
+                  name: coding-secrets
+                  key: database.submissions.password
           resources:
             limits:
               memory: "2Gi"

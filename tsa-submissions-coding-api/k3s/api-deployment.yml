@@ -13,12 +13,6 @@ spec:
   selector:
     app: coding
     tier: api
-# This is to assign a static IP
-# This will need to be changed for production use
-#status:
-#  loadBalancer:
-#    ingress:
-#    - ip: 172.16.0.55
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -40,36 +34,36 @@ spec:
       - name: coding-api
         image: ghcr.io/tj-cappelletti/tsa/submissions/coding/webapi:latest
         env:
-        - name: SubmissionsDatabase__Name
-          valueFrom:
-            configMapKeyRef:
-              name: coding-configmap
-              key: submissions.database.name
         - name: SubmissionsDatabase__Host
           valueFrom:
             configMapKeyRef:
               name: coding-configmap
-              key: submissions.database.host
-        - name: SubmissionsDatabase__Port
-          valueFrom:
-            configMapKeyRef:
-              name: coding-configmap
-              key: submissions.database.port
-        - name: SubmissionsDatabase__UserName
-          valueFrom:
-            configMapKeyRef:
-              name: coding-configmap
-              key: submissions.database.username
-        - name: SubmissionsDatabase__Password
-          valueFrom:
-            secretKeyRef:
-              name: coding-secret
-              key: password
+              key: database.submissions.host
         - name: SubmissionsDatabase__LoginDatabase
           valueFrom:
             configMapKeyRef:
               name: coding-configmap
-              key: submissions.database.loginDatabase
+              key: database.submissions.loginDatabase
+        - name: SubmissionsDatabase__Name
+          valueFrom:
+            configMapKeyRef:
+              name: coding-configmap
+              key: database.submissions.name
+        - name: SubmissionsDatabase__Password
+          valueFrom:
+            secretKeyRef:
+              name: coding-secrets
+              key: database.submissions.password
+        - name: SubmissionsDatabase__Port
+          valueFrom:
+            configMapKeyRef:
+              name: coding-configmap
+              key: database.submissions.port
+        - name: SubmissionsDatabase__UserName
+          valueFrom:
+            configMapKeyRef:
+              name: coding-configmap
+              key: database.submissions.username
         resources:
           limits:
             memory: "500Mi"
