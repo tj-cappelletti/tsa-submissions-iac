@@ -19,6 +19,9 @@ apt install qemu-guest-agent -y
 echo "Installing K3s on primary node..."
 curl -sfL https://get.k3s.io | sh -
 
+echo "Installing Helm..."
+snap install helm --classic
+
 echo "Creating kubeconfig directory..."
 mkdir -p $HOME/.kube
 chown tsa:tsa $HOME/.kube
