@@ -14,6 +14,23 @@ spec:
     app: coding
     tier: api
 ---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: coding-api-ingress
+spec:
+  rules:
+  - host: api.coding.tsa.local.webstorm.cloud
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: coding-api-service
+            port:
+              number: 8080
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
