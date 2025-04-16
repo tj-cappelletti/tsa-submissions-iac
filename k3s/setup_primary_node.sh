@@ -22,6 +22,10 @@ curl -sfL https://get.k3s.io | sh -
 echo "Installing Helm..."
 snap install helm --classic
 
+echo "Adding Authentik Helm repository..."
+helm repo add authentik https://charts.goauthentik.io
+helm repo update
+
 echo "Creating kubeconfig directory..."
 mkdir -p $HOME/.kube
 chown tsa:tsa $HOME/.kube
