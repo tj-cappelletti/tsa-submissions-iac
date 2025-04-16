@@ -8,7 +8,13 @@ fi
 
 POSTGRESQL_PASSWORD=$1
 AUTHENTIK_SECRET_KEY=$2
+NAMESPACE="authentik"
 
+echo "Deploying Authentik to K3s cluster..."
+echo "Creating namespace for Authentik..."
+kubectl apply -f namespace.yml
+
+echo "Installing Authentik using Helm..."
 helm upgrade \
    --install authentik authentik/authentik \
    -f values.yml \
