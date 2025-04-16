@@ -1,0 +1,9 @@
+# Environment variables
+# Ignore the .env file to prevent sensitive information from being exposed
+# to version control systems.
+# This file may contain sensitive information such as API keys, database
+# credentials, and other secrets that should not be shared publicly.
+.env
+
+# Ignore the secrets.txt file to prevent sensitive information from being exposed
+secrets.txt
