@@ -18,7 +18,7 @@ echo "Installing Authentik using Helm..."
 helm upgrade \
    --install authentik authentik/authentik \
    -f values.yml \
-   --namespace authentik \
+   --namespace $NAMESPACE \
    --set authentik.postgresql.password="$POSTGRESQL_PASSWORD" \
    --set authentik.secret_key="$AUTHENTIK_SECRET_KEY" \
    --set postgresql.auth.password="$POSTGRESQL_PASSWORD"
