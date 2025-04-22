@@ -17,7 +17,7 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: coding-api-ingress
+  name: coding-ui-ingress
 spec:
   rules:
   - host: coding.tsa.local.webstorm.cloud
