@@ -50,6 +50,7 @@ spec:
       containers:
       - name: coding-api
         image: ghcr.io/tj-cappelletti/tsa/submissions/coding/webapi:latest
+        imagePullPolicy: Always
         env:
         - name: SubmissionsDatabase__Host
           valueFrom:
