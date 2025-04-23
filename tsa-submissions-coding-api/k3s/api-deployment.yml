@@ -52,6 +52,11 @@ spec:
         image: ghcr.io/tj-cappelletti/tsa/submissions/coding/webapi:latest
         imagePullPolicy: Always
         env:
+        - name: Authentication__SystemApiToken
+          valueFrom:
+            secretKeyRef:
+              name: coding-secrets
+              key: authentication.system.token
         - name: SubmissionsDatabase__Host
           valueFrom:
             configMapKeyRef:
