@@ -57,6 +57,8 @@ spec:
             secretKeyRef:
               name: coding-secrets
               key: authentication.system.token
+        - name: ConnectionStrings__Redis
+          value: "coding-cache-service:6379"
         - name: SubmissionsDatabase__Host
           valueFrom:
             configMapKeyRef:

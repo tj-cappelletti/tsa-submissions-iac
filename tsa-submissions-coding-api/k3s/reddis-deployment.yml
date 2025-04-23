@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: coding-cache-service
+  namespace: coding
+  labels:
+    app: coding
+    tier: cache
+spec:
+  ports:
+  - port: 6379
+    targetPort: 6379
+  selector:
+    app: coding
+    tier: cache
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: coding-redis
+  namespace: coding
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: coding
+      tier: cache
+  template:
+    metadata:
+      labels:
+        app: coding
+        tier: cache
+    spec:
+      containers:
+      - name: coding-redis
+        image: redis:latest
+        ports:
+        - containerPort: 6379
