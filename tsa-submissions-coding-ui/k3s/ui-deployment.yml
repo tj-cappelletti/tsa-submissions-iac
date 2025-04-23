@@ -20,7 +20,7 @@ metadata:
   name: coding-ui-ingress
 spec:
   rules:
-  - host: coding.tsa.local.webstorm.cloud
+  - host: coding.tsa.local
     http:
       paths:
       - path: /

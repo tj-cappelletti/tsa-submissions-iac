@@ -9,7 +9,7 @@ server:
     ingressClassName: traefik
     enabled: true
     hosts:
-      - auth.tsa.local.webstorm.cloud
+      - auth.tsa.local
 
     # tls:
     #   - hosts:
