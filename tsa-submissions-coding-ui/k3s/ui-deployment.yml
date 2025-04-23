@@ -8,7 +8,7 @@ metadata:
 spec:
   type: LoadBalancer
   ports:
-  - port: 80
+  - port: 8080
     name: http
   selector:
     app: coding
@@ -29,14 +29,14 @@ spec:
           service:
             name: coding-ui-service
             port:
-              number: 80
+              number: 8080
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: coding-ui
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: coding
@@ -56,5 +56,5 @@ spec:
             memory: "500Mi"
             cpu: "500m"
         ports:
-        - containerPort: 80
+        - containerPort: 8080
           name: ui-http-svc
