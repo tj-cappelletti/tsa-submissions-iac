@@ -51,6 +51,14 @@ spec:
       - name: coding-ui
         image: ghcr.io/tj-cappelletti/tsa/submissions/coding/ui:latest
         imagePullPolicy: Always
+        env:
+        - name: Api__BaseUrl
+          value: "http://coding-api-service:8080"
+        - name: Api__token
+          valueFrom:
+            secretKeyRef:
+              name: coding-secrets
+              key: authentication.system.token
         resources:
           limits:
             memory: "500Mi"
