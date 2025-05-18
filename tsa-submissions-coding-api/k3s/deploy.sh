@@ -3,6 +3,11 @@ if [ -z "$1" ]; then
     exit 1
 fi
 
+if [ -z "$2" ]; then
+    echo "Usage: $0 <mongodb-password> <jwt-key>"
+    exit 1
+fi
+
 MONGODB_PASSWORD=$1
 JWT_KEY=$2
 NAMESPACE="coding"
