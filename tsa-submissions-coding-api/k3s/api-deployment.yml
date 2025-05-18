@@ -20,7 +20,7 @@ metadata:
   name: coding-api-ingress
 spec:
   rules:
-  - host: api.coding.tsa.local
+  - host: api.coding.tsa.local.webstorm.cloud
     http:
       paths:
       - path: /
@@ -52,13 +52,33 @@ spec:
         image: ghcr.io/tj-cappelletti/tsa/submissions/coding/webapi:latest
         imagePullPolicy: Always
         env:
-        - name: Authentication__SystemApiToken
+        - name: ConnectionStrings__Redis
+          value: "coding-cache-service:6379"
+        - name: Jwt__Audience
+          valueFrom:
+            configMapKeyRef:
+              name: coding-configmap
+              key: jwt.audience
+        - name: Jwt__ExpirationInHours
+          valueFrom:
+            configMapKeyRef:
+              name: coding-configmap
+              key: jwt.expirationInHours
+        - name: Jwt__Issuer
+          valueFrom:
+            configMapKeyRef:
+              name: coding-configmap
+              key: jwt.issuer
+        - name: Jwt__Key
           valueFrom:
             secretKeyRef:
               name: coding-secrets
-              key: authentication.system.token
-        - name: ConnectionStrings__Redis
-          value: "coding-cache-service:6379"
+              key: jwt.key
+        - name: Jwt__RequireHttpsMetadata
+          valueFrom:
+            configMapKeyRef:
+              name: coding-configmap
+              key: jwt.requireHttpsMetadata
         - name: SubmissionsDatabase__Host
           valueFrom:
             configMapKeyRef:
@@ -90,6 +110,9 @@ spec:
               name: coding-configmap
               key: database.submissions.username
         resources:
+          requests:
+            memory: "250Mi"
+            cpu: "250m"
           limits:
             memory: "500Mi"
             cpu: "500m"
