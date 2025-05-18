@@ -1,15 +1,10 @@
 if [ -z "$1" ]; then
-    echo "Usage: $0 <password> <sytem-api-token>"
+    echo "Usage: $0 <mongodb-password> <jwt-key>"
     exit 1
 fi
 
-if [ -z "$2" ]; then
-    echo "Usage: $0 <password> <sytem-api-token>"
-    exit 1
-fi
-
-PASSWORD=$1
-SYSTEM_API_TOKEN=$2
+MONGODB_PASSWORD=$1
+JWT_KEY=$2
 NAMESPACE="coding"
 
 echo "Deploying TSA Submissions Coding API to K3s cluster..."
@@ -29,8 +24,8 @@ fi
 
 kubectl create secret generic coding-secrets \
     --namespace $NAMESPACE \
-    --from-literal authentication.system.token="$SYSTEM_API_TOKEN" \
-    --from-literal database.submissions.password="$PASSWORD"
+    --from-literal database.submissions.password="$MONGODB_PASSWORD" \
+    --from-literal jwt.key="$JWT_KEY"
 
 echo "Creating MongoDB deployment and services..."
 kubectl apply -f mongodb-deployment.yml --namespace $NAMESPACE
