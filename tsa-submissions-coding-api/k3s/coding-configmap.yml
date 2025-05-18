@@ -5,6 +5,10 @@ metadata:
   labels:
     app: coding
 data:
+  jwt.audience: tsa-submissions-coding-ui
+  jwt.expirationInHours: '2'
+  jwt.issuer: tsa-submissions-coding-api
+  jwt.requireHttpsMetadata: 'false'
   database.submissions.host: coding-mongodb-service
   database.submissions.loginDatabase: admin
   database.submissions.name: submissions
