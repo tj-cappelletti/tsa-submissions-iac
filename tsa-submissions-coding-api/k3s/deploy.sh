@@ -33,6 +33,7 @@ kubectl create secret generic coding-secrets \
     --from-literal jwt.key="$JWT_KEY"
 
 echo "Creating MongoDB deployment and services..."
+kubectl apply -f mongodb-pvc.yml --namespace $NAMESPACE
 kubectl apply -f mongodb-deployment.yml --namespace $NAMESPACE
 
 echo "Creating TSA Submissions Coding API deployment and services..."
