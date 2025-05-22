@@ -8,7 +8,7 @@ metadata:
 spec:
   type: LoadBalancer
   ports:
-  - port: 8080
+  - port: 80
     name: http
   selector:
     app: coding
@@ -20,7 +20,7 @@ metadata:
   name: coding-ui-ingress
 spec:
   rules:
-  - host: coding.tsa.local
+  - host: tsa.webstorm.cloud
     http:
       paths:
       - path: /
@@ -29,14 +29,14 @@ spec:
           service:
             name: coding-ui-service
             port:
-              number: 8080
+              number: 80
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: coding-ui
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: coding
@@ -51,18 +51,13 @@ spec:
       - name: coding-ui
         image: ghcr.io/tj-cappelletti/tsa/submissions/coding/ui:latest
         imagePullPolicy: Always
-        env:
-        - name: Api__BaseUrl
-          value: "http://coding-api-service:8080"
-        - name: Api__token
-          valueFrom:
-            secretKeyRef:
-              name: coding-secrets
-              key: authentication.system.token
         resources:
+          requests:
+            memory: "250Mi"
+            cpu: "250m"
           limits:
             memory: "500Mi"
             cpu: "500m"
         ports:
-        - containerPort: 8080
+        - containerPort: 80
           name: ui-http-svc
